@@ -147,6 +147,9 @@ export default async function RoutePage({ params }: Props) {
         <Reveal>
           <h2>Other airports from {area.name}</h2>
           <ul className="chips">
+            <li>
+              <Link href={`/areas/${area.slug}`}>All {area.name} airport prices</Link>
+            </li>
             {otherAirports.map((a) => (
               <li key={a.code}>
                 <Link href={`/routes/${area.slug}-to-${a.slug}`}>

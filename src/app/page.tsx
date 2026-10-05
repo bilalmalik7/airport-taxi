@@ -3,7 +3,24 @@ import { JsonLd } from "@/components/Chrome";
 import HeroScene from "@/components/HeroScene";
 import HowItWorks from "@/components/HowItWorks";
 import { FadeUp, Reveal } from "@/components/Motion";
-import { AreasMarquee, CtaBand, Faq, Features, Fleet, PriceTable, Reviews, Stats } from "@/components/Sections";
+import { HeroToasts } from "@/components/Extras";
+import {
+  AirportCards,
+  AreaLinks,
+  AreasMarquee,
+  CtaBand,
+  Faq,
+  Features,
+  FlightSection,
+  Fleet,
+  GuideCards,
+  MeetGreetSection,
+  PriceTable,
+  Reviews,
+  ServiceCards,
+  Stats,
+  TrustBadges,
+} from "@/components/Sections";
 import { faqSchema } from "@/lib/schema";
 
 export default function Home() {
@@ -30,6 +47,7 @@ export default function Home() {
             </FadeUp>
             <FadeUp delay={0.24} className="hero-art">
               <HeroScene />
+              <HeroToasts />
             </FadeUp>
           </div>
           <FadeUp delay={0.2} className="hero-form">
@@ -42,6 +60,9 @@ export default function Home() {
 
       <AreasMarquee />
       <Stats />
+      <div className="wrap">
+        <TrustBadges />
+      </div>
 
       <section id="how" className="section wrap">
         <Reveal className="section-head">
@@ -49,6 +70,12 @@ export default function Home() {
           <h2>From your door to the departure lounge in 4 easy steps</h2>
         </Reveal>
         <HowItWorks />
+      </section>
+
+      <section className="section alt">
+        <div className="wrap">
+          <MeetGreetSection />
+        </div>
       </section>
 
       <section id="prices" className="section alt">
@@ -61,6 +88,20 @@ export default function Home() {
           <Reveal>
             <PriceTable />
           </Reveal>
+        </div>
+      </section>
+
+      <section id="airports" className="section wrap">
+        <Reveal className="section-head">
+          <span className="eyebrow">Airports we cover</span>
+          <h2>Glasgow, Prestwick &amp; Edinburgh: one call covers all three</h2>
+        </Reveal>
+        <AirportCards />
+      </section>
+
+      <section className="section dark">
+        <div className="wrap">
+          <FlightSection />
         </div>
       </section>
 
@@ -84,13 +125,42 @@ export default function Home() {
 
       <section className="section wrap">
         <Reveal className="section-head">
+          <span className="eyebrow">Services</span>
+          <h2>More than a lift to the airport</h2>
+        </Reveal>
+        <ServiceCards />
+      </section>
+
+      <section className="section alt">
+        <div className="wrap">
+          <Reveal className="section-head">
+            <span className="eyebrow">Areas we cover</span>
+            <h2>Airport taxis from every corner of Greater Glasgow</h2>
+            <p>Glasgow, Renfrewshire, Lanarkshire, Dunbartonshire and Ayrshire. Pick your area for local prices and drive times.</p>
+          </Reveal>
+          <AreaLinks />
+        </div>
+      </section>
+
+      <section className="section wrap">
+        <Reveal className="section-head">
           <span className="eyebrow">Reviews</span>
           <h2>What our passengers say</h2>
         </Reveal>
         <Reviews />
       </section>
 
-      <section id="faq" className="section alt">
+      <section className="section alt">
+        <div className="wrap">
+          <Reveal className="section-head">
+            <span className="eyebrow">Travel guides</span>
+            <h2>Glasgow airport tips from local drivers</h2>
+          </Reveal>
+          <GuideCards limit={3} />
+        </div>
+      </section>
+
+      <section id="faq" className="section">
         <div className="wrap narrow">
           <Reveal className="section-head">
             <span className="eyebrow">FAQ</span>

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { guides, services } from "@/lib/content";
 import { airports, areas } from "@/lib/data";
 import { site } from "@/lib/site";
 
@@ -14,9 +15,10 @@ export function Header() {
         </Link>
         <nav className="nav" aria-label="Main">
           <Link href="/#prices">Prices</Link>
-          <Link href="/#how">How it works</Link>
-          <Link href="/#fleet">Fleet</Link>
-          <Link href="/#faq">FAQ</Link>
+          <Link href="/#airports">Airports</Link>
+          <Link href="/services">Services</Link>
+          <Link href="/areas">Areas</Link>
+          <Link href="/guides">Guides</Link>
         </nav>
         <div className="header-cta">
           <a href={`tel:${site.phoneHref}`} className="phone">
@@ -58,11 +60,37 @@ export function Footer() {
               </li>
             ))}
           </ul>
+          <h3 className="mt">Services</h3>
+          <ul>
+            {services.map((s) => (
+              <li key={s.slug}>
+                <Link href={`/services/${s.slug}`}>{s.name}</Link>
+              </li>
+            ))}
+          </ul>
         </div>
         <div>
-          <h3>Popular routes</h3>
+          <h3>Areas</h3>
+          <ul className="cols">
+            {areas.map((a) => (
+              <li key={a.slug}>
+                <Link href={`/areas/${a.slug}`}>{a.name}</Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h3>Guides</h3>
           <ul>
-            {areas.slice(0, 8).map((a) => (
+            {guides.map((g) => (
+              <li key={g.slug}>
+                <Link href={`/guides/${g.slug}`}>{g.title}</Link>
+              </li>
+            ))}
+          </ul>
+          <h3 className="mt">Popular routes</h3>
+          <ul>
+            {areas.slice(0, 5).map((a) => (
               <li key={a.slug}>
                 <Link href={`/routes/${a.slug}-to-glasgow-airport`}>{a.name} to Glasgow Airport</Link>
               </li>

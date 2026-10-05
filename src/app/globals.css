@@ -385,8 +385,110 @@ p { margin: 0 0 1em; }
 .footer a:hover { color: var(--amber); }
 .footer .logo { color: #fff; }
 .footer .muted { color: #8e9ab3; }
-.footer-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 32px; }
+.footer-grid { display: grid; grid-template-columns: 1.3fr 1fr 1fr 1.2fr; gap: 32px; }
+.footer .mt { margin-top: 22px; }
 .footer-base { border-top: 1px solid rgba(255, 255, 255, 0.1); margin-top: 32px; padding-top: 20px; font-size: 0.85rem; }
+
+/* entrance (CSS-only so it paints before JS) */
+.fade-up { animation: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both; }
+@keyframes fade-up { from { opacity: 0; transform: translateY(18px); } }
+main { animation: page-in 0.4s ease-out; }
+@keyframes page-in { from { opacity: 0.4; } }
+
+/* scroll progress + whatsapp */
+.scroll-progress { position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 80; transform-origin: 0 50%; background: linear-gradient(90deg, var(--amber), var(--orange)); }
+.wa-fab { position: fixed; right: 22px; bottom: 22px; z-index: 70; width: 58px; height: 58px; border-radius: 50%; display: grid; place-items: center; background: #25d366; color: #fff; box-shadow: 0 12px 30px -8px rgba(37, 211, 102, 0.7); }
+.wa-fab svg { width: 30px; height: 30px; }
+.wa-ping { position: absolute; inset: 0; border-radius: 50%; border: 2px solid #25d366; animation: ping 2s ease-out infinite; }
+@keyframes ping { from { transform: scale(1); opacity: 0.8; } to { transform: scale(1.7); opacity: 0; } }
+
+/* hero toasts */
+.hero-art { position: relative; }
+.toasts { position: absolute; inset: 0; pointer-events: none; }
+.toast {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  color: var(--ink);
+  box-shadow: 0 16px 40px -14px rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  animation: toast 12s infinite;
+}
+.toast span { font-size: 22px; }
+.toast b { display: block; font-size: 0.85rem; color: var(--navy); }
+.toast small { font-size: 0.75rem; color: var(--muted); }
+.toast-0 { top: 8%; left: -4%; }
+.toast-1 { top: 38%; right: -4%; animation-delay: 4s; }
+.toast-2 { bottom: 8%; left: 8%; animation-delay: 8s; }
+@keyframes toast { 0% { opacity: 0; transform: translateY(14px) scale(0.95); } 4%, 28% { opacity: 1; transform: none; } 33%, 100% { opacity: 0; transform: translateY(-10px) scale(0.97); } }
+
+/* trust badges */
+.badges { list-style: none; padding: 0; margin: 28px 0 0; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.badges li { display: flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 999px; background: var(--card); border: 1px solid var(--line); font-weight: 700; font-size: 0.88rem; color: var(--navy); }
+
+/* scenes */
+.scene { width: 100%; height: auto; display: block; border-radius: 26px; }
+.scene-frame { border-radius: 26px; box-shadow: var(--shadow); background: var(--card); }
+.scene-split { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 48px; align-items: center; }
+.scene-split.reverse > :first-child { order: 2; }
+.scene-steps { list-style: none; padding: 0; margin: 0 0 24px; display: grid; gap: 10px; }
+.scene-steps li { position: relative; overflow: hidden; display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-radius: 14px; background: var(--card); border: 1px solid var(--line); font-weight: 600; color: var(--navy); }
+.scene-steps li span { font-size: 22px; }
+.scene-steps li i { position: absolute; left: 0; bottom: 0; height: 3px; width: 100%; background: linear-gradient(90deg, var(--amber), var(--orange)); transform-origin: left; transform: scaleX(0); }
+.ticks { list-style: none; padding: 0; margin: 0 0 24px; display: grid; gap: 10px; }
+.ticks li { position: relative; padding-left: 32px; font-weight: 600; }
+.ticks li::before { content: "✓"; position: absolute; left: 0; top: 1px; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; background: var(--amber); color: var(--navy); font-size: 0.75rem; font-weight: 800; }
+.section.dark { background: radial-gradient(900px 400px at 10% 0%, #1f3d7a, transparent 60%), var(--navy); color: #c5d0e6; }
+.section.dark h2 { color: #fff; }
+.section.dark .lead { color: #c5d0e6; }
+.section.dark .ticks li { color: #fff; }
+.section.dark .scene-frame { background: transparent; }
+
+/* airport / service / guide cards */
+.airport-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.airport-card { position: relative; overflow: hidden; display: flex; flex-direction: column; height: 100%; padding: 28px; border-radius: 22px; text-decoration: none; color: #fff; background: linear-gradient(140deg, var(--navy), #24478f); transition: transform 0.3s, box-shadow 0.3s; }
+.airport-card:hover { transform: translateY(-6px); box-shadow: var(--shadow); }
+.airport-card h3 { color: #fff; margin-top: 8px; }
+.airport-card p { color: #c5d0e6; font-size: 0.92rem; flex: 1; }
+.airport-code { font-size: 2.6rem; font-weight: 800; color: var(--amber); letter-spacing: 0.04em; line-height: 1; }
+.airport-plane { position: absolute; top: 22px; right: -40px; font-size: 40px; opacity: 0.25; transition: transform 0.8s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s; }
+.airport-card:hover .airport-plane { transform: translate(-90px, -14px) rotate(-12deg); opacity: 0.9; }
+.airport-from { font-weight: 600; }
+.airport-from b { color: var(--amber); font-size: 1.2rem; }
+.service-cards { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+.service-card, .guide-card { display: flex; flex-direction: column; height: 100%; padding: 22px; border-radius: var(--radius); background: var(--card); border: 1px solid var(--line); text-decoration: none; transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s; }
+.service-card:hover, .guide-card:hover { transform: translateY(-5px); box-shadow: var(--shadow); border-color: var(--amber); }
+.service-card p, .guide-card p { color: var(--muted); font-size: 0.9rem; flex: 1; }
+.service-icon { display: inline-grid; place-items: center; width: 52px; height: 52px; border-radius: 16px; background: #fff4dc; font-size: 26px; margin-bottom: 12px; transition: transform 0.4s; }
+.service-card:hover .service-icon { transform: rotate(-8deg) scale(1.1); }
+.more { font-weight: 700; color: var(--orange); font-size: 0.9rem; }
+.guide-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.guide-card small { color: var(--orange); font-weight: 700; text-transform: uppercase; font-size: 0.72rem; letter-spacing: 0.06em; margin-bottom: 8px; }
+.area-links { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.area-links a { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 14px 16px; border-radius: 14px; background: var(--card); border: 1px solid var(--line); text-decoration: none; font-weight: 700; color: var(--navy); transition: transform 0.2s, border-color 0.2s; }
+.area-links a:hover { transform: translateY(-3px); border-color: var(--amber); }
+.area-links small { color: var(--muted); font-weight: 600; white-space: nowrap; }
+.chips span { display: inline-block; padding: 8px 14px; border-radius: 999px; background: var(--card); border: 1px solid var(--line); font-weight: 600; font-size: 0.9rem; }
+.airport-mini { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 22px 0 28px; }
+.airport-mini-card { display: flex; flex-direction: column; padding: 16px; border-radius: 16px; background: var(--card); border: 1px solid var(--line); text-decoration: none; transition: transform 0.2s, border-color 0.2s; }
+.airport-mini-card:hover { transform: translateY(-4px); border-color: var(--amber); }
+.airport-mini-card small { color: var(--orange); font-weight: 800; }
+.airport-mini-card span { color: var(--muted); font-size: 0.85rem; }
+.airport-mini-card b { font-size: 1.5rem; color: var(--navy); }
+
+/* guides */
+.article-grid { display: grid; grid-template-columns: 1fr 380px; gap: 48px; padding: 32px 16px 72px; align-items: start; }
+.article h2 { margin-top: 1.4em; scroll-margin-top: 90px; }
+.toc { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 18px 22px; }
+.toc ol { margin: 8px 0 0; padding-left: 20px; }
+.toc a { color: var(--navy); font-weight: 600; text-decoration: none; }
+.toc a:hover { color: var(--orange); }
+.sticky { position: sticky; top: 90px; }
 
 /* sticky mobile actions */
 .sticky-call { display: none; }
@@ -401,7 +503,14 @@ p { margin: 0 0 1em; }
   .how ol, .fleet { grid-template-columns: repeat(2, 1fr); }
   .how-track { display: none; }
   .features, .reviews { grid-template-columns: 1fr 1fr; }
-  .footer-grid { grid-template-columns: 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .scene-split, .article-grid { grid-template-columns: 1fr; }
+  .scene-split.reverse > :first-child { order: 0; }
+  .airport-cards, .guide-cards { grid-template-columns: 1fr; }
+  .service-cards { grid-template-columns: repeat(2, 1fr); }
+  .area-links { grid-template-columns: repeat(2, 1fr); }
+  .toast-0 { left: 2%; }
+  .toast-1 { right: 2%; }
 }
 
 @media (max-width: 600px) {
@@ -418,6 +527,13 @@ p { margin: 0 0 1em; }
   .actions { flex: 1; justify-content: flex-end; }
   .route-card { grid-template-columns: 1fr; text-align: center; }
   .route-line { display: none; }
+  .footer-grid, .service-cards, .area-links { grid-template-columns: 1fr; }
+  .airport-mini { gap: 8px; }
+  .airport-mini-card { padding: 12px 10px; }
+  .airport-mini-card b { font-size: 1.2rem; }
+  .wa-fab { display: none; }
+  .toast { padding: 7px 10px; }
+  .toast span { font-size: 18px; }
   .sticky-call {
     display: grid;
     grid-template-columns: repeat(3, 1fr);

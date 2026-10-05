@@ -1,9 +1,12 @@
 import Link from "next/link";
 import { airports, areas, vehicles, type Area } from "@/lib/data";
+import { guides, services } from "@/lib/content";
 import { faqs } from "@/lib/faq";
 import { gbp } from "@/lib/pricing";
 import { site } from "@/lib/site";
 import { CountUp, Reveal } from "./Motion";
+import FlightTrackScene from "./scenes/FlightTrackScene";
+import MeetGreetScene, { MeetGreetSteps } from "./scenes/MeetGreetScene";
 
 export function Stats() {
   return (
@@ -191,5 +194,140 @@ export function CtaBand({ title = "Ready when your flight is." }: { title?: stri
         ✈
       </div>
     </section>
+  );
+}
+
+export function TrustBadges() {
+  const items = [
+    ["🪪", "Council licensed"],
+    ["🛡️", "Fully insured"],
+    ["💳", "Card, Apple & Google Pay"],
+    ["🕐", "24/7, 365 days"],
+    ["🛬", "Flight tracking"],
+  ];
+  return (
+    <ul className="badges">
+      {items.map(([icon, label], i) => (
+        <Reveal as="li" key={label} delay={i * 0.06}>
+          <span>{icon}</span>
+          {label}
+        </Reveal>
+      ))}
+    </ul>
+  );
+}
+
+export function AirportCards() {
+  return (
+    <div className="airport-cards">
+      {airports.map((a, i) => {
+        const from = Math.min(...areas.map((ar) => ar.fares[a.code]));
+        return (
+          <Reveal key={a.code} delay={i * 0.1}>
+            <Link href={`/airports/${a.slug}`} className="airport-card">
+              <span className="airport-code">{a.code}</span>
+              <span className="airport-plane" aria-hidden>
+                ✈
+              </span>
+              <h3>{a.name}</h3>
+              <p>{a.blurb}</p>
+              <span className="airport-from">
+                From <b>{gbp(from)}</b> →
+              </span>
+            </Link>
+          </Reveal>
+        );
+      })}
+    </div>
+  );
+}
+
+export function ServiceCards() {
+  return (
+    <div className="service-cards">
+      {services.map((s, i) => (
+        <Reveal key={s.slug} delay={i * 0.07}>
+          <Link href={`/services/${s.slug}`} className="service-card">
+            <span className="service-icon">{s.icon}</span>
+            <h3>{s.name}</h3>
+            <p>{s.short}</p>
+            <span className="more">Learn more →</span>
+          </Link>
+        </Reveal>
+      ))}
+    </div>
+  );
+}
+
+export function GuideCards({ limit, exclude }: { limit?: number; exclude?: string }) {
+  return (
+    <div className="guide-cards">
+      {guides.filter((g) => g.slug !== exclude).slice(0, limit).map((g, i) => (
+        <Reveal key={g.slug} delay={i * 0.07}>
+          <Link href={`/guides/${g.slug}`} className="guide-card">
+            <small>{g.readMins} min read</small>
+            <h3>{g.title}</h3>
+            <p>{g.description}</p>
+            <span className="more">Read guide →</span>
+          </Link>
+        </Reveal>
+      ))}
+    </div>
+  );
+}
+
+export function AreaLinks() {
+  return (
+    <ul className="area-links">
+      {areas.map((a, i) => (
+        <Reveal as="li" key={a.slug} delay={(i % 8) * 0.04}>
+          <Link href={`/areas/${a.slug}`}>
+            <span>📍 {a.name}</span>
+            <small>from {gbp(Math.min(...airports.map((ap) => a.fares[ap.code])))}</small>
+          </Link>
+        </Reveal>
+      ))}
+    </ul>
+  );
+}
+
+export function MeetGreetSection() {
+  return (
+    <div className="scene-split">
+      <Reveal className="scene-frame">
+        <MeetGreetScene />
+      </Reveal>
+      <div>
+        <Reveal>
+          <span className="eyebrow">Meet &amp; greet</span>
+          <h2>A friendly face waiting when you land</h2>
+          <p className="lead">No taxi queues and no searching car parks. Your driver is in arrivals with your name, then takes care of the bags.</p>
+        </Reveal>
+        <MeetGreetSteps />
+        <Link href="/services/meet-and-greet" className="btn primary">
+          Add meet &amp; greet: £8
+        </Link>
+      </div>
+    </div>
+  );
+}
+
+export function FlightSection() {
+  return (
+    <div className="scene-split reverse">
+      <Reveal className="scene-frame">
+        <FlightTrackScene />
+      </Reveal>
+      <Reveal>
+        <span className="eyebrow">Flight tracking</span>
+        <h2>Flight delayed? We already know.</h2>
+        <p className="lead">We follow your flight live. If it lands early or late, your pickup moves with it automatically, at no extra cost.</p>
+        <ul className="ticks">
+          <li>Live arrival tracking on every booking</li>
+          <li>45 minutes free waiting after landing</li>
+          <li>Text the moment your driver is in place</li>
+        </ul>
+      </Reveal>
+    </div>
   );
 }

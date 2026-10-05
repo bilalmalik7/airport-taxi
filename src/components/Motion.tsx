@@ -36,10 +36,11 @@ export function CountUp({ to, decimals = 0, suffix = "" }: { to: number; decimal
   );
 }
 
+// CSS-only entrance so above-the-fold content paints immediately, before JavaScript loads.
 export function FadeUp({ children, delay = 0, className }: { children: React.ReactNode; delay?: number; className?: string }) {
   return (
-    <motion.div className={className} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay, ease: [0.22, 1, 0.36, 1] }}>
+    <div className={`fade-up ${className ?? ""}`} style={{ animationDelay: `${delay}s` }}>
       {children}
-    </motion.div>
+    </div>
   );
 }

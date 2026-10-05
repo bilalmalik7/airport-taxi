@@ -49,3 +49,24 @@ export const breadcrumbSchema = (items: { name: string; path: string }[]) => ({
     item: `${site.url}${it.path}`,
   })),
 });
+
+export const articleSchema = (a: { title: string; description: string; path: string }) => ({
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: a.title,
+  description: a.description,
+  mainEntityOfPage: `${site.url}${a.path}`,
+  author: { "@type": "Organization", name: site.name, url: site.url },
+  publisher: { "@type": "Organization", name: site.name, url: site.url },
+});
+
+export const serviceSchema = (s: { name: string; description: string; path: string }) => ({
+  "@context": "https://schema.org",
+  "@type": "Service",
+  serviceType: s.name,
+  name: `${s.name} | ${site.name}`,
+  description: s.description,
+  url: `${site.url}${s.path}`,
+  provider: { "@id": `${site.url}/#business` },
+  areaServed: { "@type": "City", name: "Glasgow" },
+});
