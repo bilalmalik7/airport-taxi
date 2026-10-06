@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import AreaFinder from "@/components/AreaFinder";
 import { FadeUp, Reveal } from "@/components/Motion";
 import { AreaLinks, CtaBand, PriceTable } from "@/components/Sections";
 
@@ -16,7 +17,10 @@ export default function AreasPage() {
           <FadeUp className="section-head">
             <span className="eyebrow">Areas we cover</span>
             <h1>Airport taxis across Greater Glasgow</h1>
-            <p className="lead">Pick your area for local fares, drive times and instant booking.</p>
+            <p className="lead">Type your town, postcode or street to see your fares instantly.</p>
+          </FadeUp>
+          <FadeUp delay={0.1} className="areas-finder">
+            <AreaFinder />
           </FadeUp>
           <AreaLinks />
         </div>

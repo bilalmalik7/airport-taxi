@@ -490,6 +490,148 @@ main { animation: page-in 0.4s ease-out; }
 .toc a:hover { color: var(--orange); }
 .sticky { position: sticky; top: 90px; }
 
+/* ---------- area finder ---------- */
+.hero-finder { margin: 4px 0 22px; position: relative; z-index: 5; }
+.finder-title { font-weight: 700; color: #fff; margin: 0 0 10px; font-size: 1rem; }
+.finder { position: relative; }
+.finder-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 6px 6px 16px;
+  border-radius: 18px;
+  background: #fff;
+  border: 2px solid transparent;
+  box-shadow: 0 18px 50px -24px rgba(0, 0, 0, 0.55);
+  transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
+}
+.finder-box.focus { border-color: var(--amber); box-shadow: 0 0 0 6px rgba(255, 183, 3, 0.18), 0 18px 50px -24px rgba(0, 0, 0, 0.55); transform: translateY(-1px); }
+.finder-icon { font-size: 18px; }
+.finder-box input { flex: 1; min-width: 0; border: 0; outline: 0; font: inherit; font-size: 16px; font-weight: 600; padding: 12px 0; background: transparent; color: var(--ink); }
+.finder-clear { border: 0; background: #eef2f8; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; color: var(--muted); }
+.finder-locate { display: inline-flex; align-items: center; gap: 6px; border: 0; cursor: pointer; font: inherit; font-weight: 700; font-size: 0.85rem; padding: 11px 14px; border-radius: 12px; background: var(--navy); color: #fff; white-space: nowrap; transition: background 0.2s; }
+.finder-locate:hover { background: #1f3d7a; }
+.finder-popular { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 12px; font-size: 0.85rem; }
+.finder-popular span { color: var(--muted); font-weight: 600; }
+.finder.dark .finder-popular span { color: #9fb3d9; }
+.finder-popular button { font: inherit; font-weight: 600; font-size: 0.82rem; border: 1px solid var(--line); background: #fff; color: var(--navy); border-radius: 999px; padding: 6px 12px; cursor: pointer; }
+.finder.dark .finder-popular button { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.18); color: #fff; }
+.finder-list { list-style: none; padding: 0; margin: 12px 0 0; display: grid; gap: 10px; }
+.finder-hit { display: block; padding: 14px 16px; border-radius: 16px; background: #fff; border: 1.5px solid var(--line); color: var(--ink); text-decoration: none; transition: border-color 0.2s, box-shadow 0.2s; }
+.finder-hit.active { border-color: var(--amber); box-shadow: 0 12px 30px -18px rgba(255, 140, 0, 0.8); }
+.finder-hit.airport { display: flex; align-items: center; gap: 12px; }
+.finder-hit-head { display: flex; align-items: center; gap: 12px; }
+.finder-hit-head > div { flex: 1; min-width: 0; }
+.finder-hit small { display: block; color: var(--muted); font-size: 0.8rem; }
+.finder-pin { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 12px; background: #fff4dc; font-size: 20px; flex-shrink: 0; }
+.finder-hit.active .finder-pin { animation: bounce 0.9s ease-in-out infinite; }
+.finder-name { font-weight: 800; color: var(--navy); text-decoration: none; font-size: 1.02rem; }
+.finder-airports { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; }
+.finder-chip { display: flex; flex-direction: column; align-items: flex-start; padding: 8px 10px; border-radius: 12px; background: #f3f6fb; text-decoration: none; color: var(--navy); transition: background 0.2s, transform 0.2s; }
+.finder-chip:hover { background: #fff4dc; transform: translateY(-2px); }
+.finder-chip span { font-size: 0.72rem; font-weight: 800; color: var(--orange); }
+.finder-chip b { font-size: 1.1rem; }
+.finder-chip small { font-size: 0.72rem; }
+.finder-empty { display: flex; gap: 12px; align-items: center; padding: 14px 16px; border-radius: 16px; background: #fff; border: 1.5px dashed var(--line); }
+.finder-empty > span { font-size: 26px; }
+.finder-empty small { display: block; color: var(--muted); }
+.finder-empty a { color: var(--orange); font-weight: 700; }
+.finder-note { margin: 10px 0 0; font-size: 0.85rem; color: var(--muted); }
+.finder.dark .finder-note { color: #c5d0e6; }
+.finder.dark .finder-note a { color: var(--amber); }
+.areas-finder { max-width: 720px; margin: 0 auto 36px; }
+.spinner { width: 16px; height: 16px; border-radius: 50%; border: 2.5px solid rgba(255, 255, 255, 0.35); border-top-color: var(--amber); animation: spin 0.7s linear infinite; display: inline-block; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ---------- booking form combobox ---------- */
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field-label { font-size: 0.85rem; font-weight: 700; color: var(--navy); }
+.combo { position: relative; }
+.combo-input { position: relative; }
+.combo-input input { padding-right: 44px !important; }
+.combo-locate { position: absolute; right: 6px; top: 50%; transform: translateY(-50%); border: 0; background: #fff4dc; width: 34px; height: 34px; border-radius: 10px; cursor: pointer; display: grid; place-items: center; }
+.combo-locate .spinner { border-color: rgba(11, 27, 58, 0.2); border-top-color: var(--orange); }
+.combo-note { color: #c0392b; font-size: 0.75rem; }
+.combo-list { position: absolute; z-index: 30; left: 0; right: 0; top: calc(100% + 6px); max-height: 260px; overflow-y: auto; list-style: none; margin: 0; padding: 6px; background: #fff; border: 1px solid var(--line); border-radius: 14px; box-shadow: 0 24px 50px -20px rgba(11, 27, 58, 0.45); transform-origin: top; }
+.combo-list li { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding: 9px 12px; border-radius: 10px; cursor: pointer; font-weight: 700; color: var(--navy); font-size: 0.92rem; }
+.combo-list li small { display: block; font-weight: 500; color: var(--muted); font-size: 0.75rem; }
+.combo-list li.active { background: #fff4dc; }
+.combo-list li.chosen b { color: var(--green); }
+.combo-list .combo-empty { color: var(--muted); font-weight: 500; cursor: default; }
+.quick { display: flex; gap: 6px; }
+.quick button { font: inherit; font-size: 0.75rem; font-weight: 700; border: 1px solid var(--line); background: #fff; color: var(--muted); border-radius: 999px; padding: 4px 10px; cursor: pointer; transition: all 0.2s; }
+.quick button.on, .quick button:hover { background: var(--navy); color: #fff; border-color: var(--navy); }
+.btn-loading { display: inline-flex; align-items: center; gap: 10px; }
+.btn-road { position: relative; width: 46px; height: 18px; overflow: hidden; border-bottom: 2px dashed rgba(11, 27, 58, 0.4); }
+.btn-road span { position: absolute; bottom: -2px; animation: drive-btn 1s linear infinite; font-size: 14px; }
+@keyframes drive-btn { from { left: -20px; } to { left: 50px; } }
+
+/* ---------- journey showcase ---------- */
+.journey { display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 28px; align-items: center; }
+.journey-stage { border-radius: 26px; box-shadow: var(--shadow); background: #fff; overflow: hidden; }
+.journey-tabs { display: grid; gap: 12px; }
+.journey-tab { position: relative; overflow: hidden; display: flex; gap: 14px; align-items: flex-start; text-align: left; font: inherit; padding: 16px 18px; border-radius: 18px; border: 1.5px solid var(--line); background: #fff; cursor: pointer; color: var(--ink); transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s; }
+.journey-tab:hover { transform: translateX(4px); }
+.journey-tab.on { border-color: var(--amber); box-shadow: 0 16px 40px -24px rgba(255, 140, 0, 0.9); }
+.journey-tab small { display: block; font-size: 0.72rem; font-weight: 800; color: var(--orange); text-transform: uppercase; letter-spacing: 0.06em; }
+.journey-tab b { display: block; color: var(--navy); font-size: 1.02rem; }
+.journey-tab em { display: block; font-style: normal; color: var(--muted); font-size: 0.86rem; max-height: 0; opacity: 0; overflow: hidden; transition: max-height 0.4s, opacity 0.4s; }
+.journey-tab.on em { max-height: 80px; opacity: 1; margin-top: 4px; }
+.journey-icon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 14px; background: #fff4dc; font-size: 22px; flex-shrink: 0; }
+.journey-bar { position: absolute; left: 0; bottom: 0; height: 3px; width: 100%; background: linear-gradient(90deg, var(--amber), var(--orange)); transform-origin: left; }
+
+/* ---------- headline rotator ---------- */
+.rotator { display: inline-block; perspective: 600px; min-width: 6ch; }
+.rotator > span { display: inline-block; }
+
+/* ---------- tilt cards ---------- */
+.tilt { position: relative; transform-style: preserve-3d; border-radius: 22px; }
+.tilt::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; background: radial-gradient(400px circle at var(--sx, 50%) var(--sy, 50%), rgba(255, 255, 255, 0.22), transparent 45%); transition: opacity 0.3s; }
+.tilt:hover::after { opacity: 1; }
+.h100 { height: 100%; }
+
+/* ---------- buttons: shine sweep ---------- */
+.btn.primary { position: relative; overflow: hidden; }
+.btn.primary::after { content: ""; position: absolute; top: 0; left: -60%; width: 40%; height: 100%; background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.6), transparent); transform: skewX(-20deg); transition: left 0.6s; }
+.btn.primary:hover::after { left: 130%; }
+
+/* ---------- booking card glowing border ---------- */
+.hero-form.glow { position: relative; isolation: isolate; }
+.hero-form.glow::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  z-index: -1;
+  border-radius: 26px;
+  background: conic-gradient(from var(--angle, 0deg), var(--amber), transparent 25%, transparent 50%, var(--orange) 75%, var(--amber));
+  animation: rotate-border 6s linear infinite;
+}
+.hero-form.glow::after { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: 24px; background: var(--card); }
+@property --angle { syntax: "<angle>"; initial-value: 0deg; inherits: false; }
+@keyframes rotate-border { to { --angle: 360deg; } }
+
+/* ---------- reviews marquee ---------- */
+.reviews-marquee { overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.reviews-track { display: flex; gap: 20px; width: max-content; animation: marquee 60s linear infinite; padding: 8px 0 16px; }
+.reviews-marquee:hover .reviews-track { animation-play-state: paused; }
+.reviews-track .review { width: 340px; margin: 0; flex-shrink: 0; }
+.review blockquote { margin: 8px 0 12px; }
+
+/* ---------- back to top ---------- */
+.to-top { position: fixed; right: 26px; bottom: 96px; z-index: 69; width: 50px; height: 58px; border-radius: 16px; border: 0; cursor: pointer; background: var(--navy); color: #fff; display: grid; place-items: center; box-shadow: 0 12px 30px -10px rgba(11, 27, 58, 0.6); font: inherit; }
+.to-top span { font-size: 20px; display: inline-block; transform: rotate(-90deg); }
+.to-top small { font-size: 0.65rem; font-weight: 700; margin-top: -8px; }
+
+/* ---------- celebration ---------- */
+.confirmed .wrap { position: relative; }
+.celebrate { position: absolute; inset: -40px 0 auto; height: 320px; pointer-events: none; overflow: hidden; }
+.celebrate i { position: absolute; top: -12px; width: 9px; height: 14px; border-radius: 2px; animation: confetti 2.6s cubic-bezier(0.2, 0.6, 0.4, 1) both; }
+.celebrate i:nth-child(2n) { width: 7px; height: 7px; border-radius: 50%; }
+@keyframes confetti { from { transform: translateY(0) rotate(0); opacity: 1; } to { transform: translateY(320px) rotate(540deg); opacity: 0; } }
+.celebrate-taxi { position: absolute; bottom: 0; font-size: 34px; animation: celebrate-drive 3s 0.4s cubic-bezier(0.5, 0, 0.5, 1) both; }
+@keyframes celebrate-drive { from { right: -80px; } to { right: 110%; } }
+
+
 /* sticky mobile actions */
 .sticky-call { display: none; }
 
@@ -510,6 +652,8 @@ main { animation: page-in 0.4s ease-out; }
   .service-cards { grid-template-columns: repeat(2, 1fr); }
   .area-links { grid-template-columns: repeat(2, 1fr); }
   .toast-0 { left: 2%; }
+  .journey { grid-template-columns: 1fr; }
+  .hero-finder { order: 1; }
   .toast-1 { right: 2%; }
 }
 
@@ -532,6 +676,12 @@ main { animation: page-in 0.4s ease-out; }
   .airport-mini-card { padding: 12px 10px; }
   .airport-mini-card b { font-size: 1.2rem; }
   .wa-fab { display: none; }
+  .to-top { bottom: 70px; right: 14px; }
+  .finder-locate span { display: none; }
+  .finder-airports { gap: 6px; }
+  .finder-chip { padding: 7px 8px; }
+  .journey-tab em { display: none; }
+  .journey-tab { padding: 12px 14px; }
   .toast { padding: 7px 10px; }
   .toast span { font-size: 18px; }
   .sticky-call {

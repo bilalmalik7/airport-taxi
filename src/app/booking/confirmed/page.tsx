@@ -10,6 +10,12 @@ export default async function Confirmed({ searchParams }: { searchParams: Promis
   return (
     <section className="page-hero confirmed">
       <div className="wrap narrow center">
+        <div className="celebrate" aria-hidden>
+          {Array.from({ length: 28 }, (_, i) => (
+            <i key={i} style={{ left: `${(i * 37) % 100}%`, animationDelay: `${(i % 7) * 0.12}s`, background: ["#ffb703", "#ff7a00", "#5b8bd6", "#1f9d63", "#e85d75"][i % 5] }} />
+          ))}
+          <span className="celebrate-taxi">🚕💨</span>
+        </div>
         <FadeUp>
           <div className="tick" aria-hidden>
             <svg viewBox="0 0 52 52">

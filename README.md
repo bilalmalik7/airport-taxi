@@ -16,6 +16,8 @@ Built with Next.js, Framer Motion and Stripe.
   - Open Graph share image for WhatsApp and Facebook previews
   - TaxiService, FAQPage and Breadcrumb structured data
   - sitemap.xml, robots.txt, canonical URLs and per-page titles and descriptions
+- **Smart area search**: as the customer types, the site shows matching areas with prices and drive times to all three airports. It accepts town names, postcodes ("G12 8AA") and streets or neighbourhoods ("Byres Road", "Shawlands"), and tolerates typos ("pasley"). "Use my location" finds the nearest area. The same search powers the area picker in the booking form.
+- **Journey film**: three story scenes play in order on the homepage, with tabs. 1) Pre-dawn pickup at home: lights on, taxi arrives, bags loaded, drive off into the sunrise. 2) Drop-off at departures: bag unloaded, "Have a great trip!", plane takes off. 3) Meet & greet on the way home.
 - **Story animations**: a meet & greet scene where the driver waits with a name board, waves, takes the suitcase, loads the boot and drives off, with captions that highlight in sync. There is also a flight-tracking scene: the plane flies TFS → GLA, the status flips ON TIME → DELAYED → LANDED, and the driver is notified.
 - **Other animations**: an SVG hero where a taxi drives from the pickup pin to the terminal and a plane takes off. It uses no JavaScript, so it doesn't slow the page down. There are also a scroll-linked "how it works" track, a marquee of areas, card reveals, an animated booking confirmation and a CTA plane. All animation respects `prefers-reduced-motion`.
 - **Mobile**: a sticky Call / WhatsApp / Book bar.

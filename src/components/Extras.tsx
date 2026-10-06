@@ -1,6 +1,7 @@
 "use client";
 
-import { motion, useScroll, useSpring } from "framer-motion";
+import { AnimatePresence, motion, useScroll, useSpring } from "framer-motion";
+import { useEffect, useState } from "react";
 import { site } from "@/lib/site";
 
 export function ScrollProgress() {
@@ -53,5 +54,82 @@ export function HeroToasts() {
         </div>
       ))}
     </div>
+  );
+}
+
+// Cycles the last word of the headline. The first word is rendered on the server, so SEO text is intact.
+export function RotatingWord({ words, interval = 2600 }: { words: string[]; interval?: number }) {
+  const [i, setI] = useState(0);
+  useEffect(() => {
+    const t = setInterval(() => setI((n) => (n + 1) % words.length), interval);
+    return () => clearInterval(t);
+  }, [words.length, interval]);
+  return (
+    <span className="rotator">
+      <AnimatePresence mode="wait" initial={false}>
+        <motion.span
+          key={words[i]}
+          className="hl"
+          initial={{ y: "70%", opacity: 0, rotateX: -70 }}
+          animate={{ y: 0, opacity: 1, rotateX: 0 }}
+          exit={{ y: "-70%", opacity: 0, rotateX: 70 }}
+          transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+        >
+          {words[i]}
+        </motion.span>
+      </AnimatePresence>
+    </span>
+  );
+}
+
+// Subtle 3D tilt that follows the pointer, with a soft light spot.
+export function Tilt({ children, className, max = 8 }: { children: React.ReactNode; className?: string; max?: number }) {
+  const rx = useSpring(0, { stiffness: 200, damping: 18 });
+  const ry = useSpring(0, { stiffness: 200, damping: 18 });
+  const [spot, setSpot] = useState({ x: 50, y: 50 });
+  return (
+    <motion.div
+      className={`tilt ${className ?? ""}`}
+      style={{ rotateX: rx, rotateY: ry, transformPerspective: 900, ["--sx" as string]: `${spot.x}%`, ["--sy" as string]: `${spot.y}%` }}
+      onPointerMove={(e) => {
+        if (e.pointerType !== "mouse") return;
+        const r = e.currentTarget.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width;
+        const py = (e.clientY - r.top) / r.height;
+        ry.set((px - 0.5) * max * 2);
+        rx.set(-(py - 0.5) * max * 2);
+        setSpot({ x: px * 100, y: py * 100 });
+      }}
+      onPointerLeave={() => {
+        rx.set(0);
+        ry.set(0);
+      }}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+export function BackToTop() {
+  const { scrollY } = useScroll();
+  const [show, setShow] = useState(false);
+  useEffect(() => scrollY.on("change", (v) => setShow(v > 1200)), [scrollY]);
+  return (
+    <AnimatePresence>
+      {show && (
+        <motion.button
+          className="to-top"
+          aria-label="Back to top"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 30 }}
+          whileHover={{ y: -4 }}
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        >
+          <span aria-hidden>🚕</span>
+          <small>Top</small>
+        </motion.button>
+      )}
+    </AnimatePresence>
   );
 }

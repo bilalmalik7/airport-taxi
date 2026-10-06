@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { Footer, Header, JsonLd, StickyCall } from "@/components/Chrome";
-import { ScrollProgress, WhatsAppFab } from "@/components/Extras";
+import { BackToTop, ScrollProgress, WhatsAppFab } from "@/components/Extras";
 import { businessSchema } from "@/lib/schema";
 import { site } from "@/lib/site";
 import "./globals.css";
@@ -36,6 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Footer />
         <StickyCall />
         <WhatsAppFab />
+        <BackToTop />
       </body>
     </html>
   );

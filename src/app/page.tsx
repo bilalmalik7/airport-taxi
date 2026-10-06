@@ -3,7 +3,9 @@ import { JsonLd } from "@/components/Chrome";
 import HeroScene from "@/components/HeroScene";
 import HowItWorks from "@/components/HowItWorks";
 import { FadeUp, Reveal } from "@/components/Motion";
-import { HeroToasts } from "@/components/Extras";
+import AreaFinder from "@/components/AreaFinder";
+import { HeroToasts, RotatingWord } from "@/components/Extras";
+import JourneyShowcase from "@/components/JourneyShowcase";
 import {
   AirportCards,
   AreaLinks,
@@ -14,7 +16,6 @@ import {
   FlightSection,
   Fleet,
   GuideCards,
-  MeetGreetSection,
   PriceTable,
   Reviews,
   ServiceCards,
@@ -36,7 +37,8 @@ export default function Home() {
             </FadeUp>
             <FadeUp delay={0.08}>
               <h1>
-                Glasgow airport taxis, <span className="hl">fixed price</span>, door to departures.
+                Glasgow airport taxis at a <span className="hl">fixed price</span>, door to{" "}
+                <RotatingWord words={["departures", "arrivals", "your door"]} />
               </h1>
             </FadeUp>
             <FadeUp delay={0.16}>
@@ -45,12 +47,16 @@ export default function Home() {
                 on arrivals.
               </p>
             </FadeUp>
+            <FadeUp delay={0.2} className="hero-finder">
+              <p className="finder-title">Where are you travelling from?</p>
+              <AreaFinder dark />
+            </FadeUp>
             <FadeUp delay={0.24} className="hero-art">
               <HeroScene />
               <HeroToasts />
             </FadeUp>
           </div>
-          <FadeUp delay={0.2} className="hero-form">
+          <FadeUp delay={0.2} className="hero-form glow">
             <h2 className="form-title">Book your transfer</h2>
             <BookingForm />
             <p className="trust">🔒 Secure payment by Stripe · No hidden fees</p>
@@ -72,9 +78,14 @@ export default function Home() {
         <HowItWorks />
       </section>
 
-      <section className="section alt">
+      <section className="section alt journey-section">
         <div className="wrap">
-          <MeetGreetSection />
+          <Reveal className="section-head">
+            <span className="eyebrow">Your journey</span>
+            <h2>From your front door to the departure gate, and back home again</h2>
+            <p>Every trip, the same friendly service. Tap a step to watch it.</p>
+          </Reveal>
+          <JourneyShowcase />
         </div>
       </section>
 

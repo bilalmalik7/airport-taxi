@@ -2,14 +2,21 @@
 
 import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
-import { airports, areas, vehicles } from "@/lib/data";
+import { airports, vehicles } from "@/lib/data";
+import AreaCombobox from "./AreaCombobox";
 import { getQuote, gbp } from "@/lib/pricing";
 
 type Props = { initialArea?: string; initialAirport?: string };
 
 const STEPS = ["Journey", "Vehicle", "Pay"] as const;
 
-const today = () => new Date().toISOString().slice(0, 10);
+// Local calendar date (not UTC) so "today" is right late at night in the UK.
+const isoDay = (offset = 0) => {
+  const d = new Date();
+  d.setDate(d.getDate() + offset);
+  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+};
+const today = () => isoDay(0);
 
 function AnimatedPrice({ value }: { value: number }) {
   const mv = useMotionValue(value);
@@ -157,17 +164,10 @@ export default function BookingForm({ initialArea = "", initialAirport = "GLA" }
                     </button>
                   ))}
                 </div>
-                <label>
-                  Your area
-                  <select value={f.area} onChange={(e) => set("area", e.target.value)} required>
-                    <option value="">Select area…</option>
-                    {areas.map((a) => (
-                      <option key={a.slug} value={a.slug}>
-                        {a.name} ({a.postcodes})
-                      </option>
-                    ))}
-                  </select>
-                </label>
+                <div className="field">
+                  <span className="field-label">Your area</span>
+                  <AreaCombobox value={f.area} onChange={(slug) => set("area", slug)} />
+                </div>
                 <label>
                   Airport
                   <select value={f.airport} onChange={(e) => set("airport", e.target.value)}>
@@ -185,6 +185,16 @@ export default function BookingForm({ initialArea = "", initialAirport = "GLA" }
                 <label>
                   {f.direction === "to" ? "Pickup date" : "Landing date"}
                   <input type="date" min={today()} value={f.date} onChange={(e) => set("date", e.target.value)} />
+                  <span className="quick">
+                    {[
+                      ["Today", isoDay(0)],
+                      ["Tomorrow", isoDay(1)],
+                    ].map(([label, day]) => (
+                      <button type="button" key={label} className={f.date === day ? "on" : ""} onClick={() => set("date", day)}>
+                        {label}
+                      </button>
+                    ))}
+                  </span>
                 </label>
                 <label>
                   {f.direction === "to" ? "Pickup time" : "Landing time"}
@@ -338,7 +348,20 @@ export default function BookingForm({ initialArea = "", initialAirport = "GLA" }
             </button>
           )}
           <motion.button type="submit" className="btn primary" whileTap={{ scale: 0.97 }} disabled={submitting}>
-            {step < 2 ? "Continue" : submitting ? "Booking…" : f.payment === "online" ? "Book & pay securely" : "Confirm booking"}
+            {submitting ? (
+              <span className="btn-loading">
+                <span className="btn-road" aria-hidden>
+                  <span>🚕</span>
+                </span>
+                Booking…
+              </span>
+            ) : step < 2 ? (
+              "Continue →"
+            ) : f.payment === "online" ? (
+              "Book & pay securely"
+            ) : (
+              "Confirm booking"
+            )}
           </motion.button>
         </div>
       </div>

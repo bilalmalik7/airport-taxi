@@ -4,6 +4,7 @@ import { guides, services } from "@/lib/content";
 import { faqs } from "@/lib/faq";
 import { gbp } from "@/lib/pricing";
 import { site } from "@/lib/site";
+import { Tilt } from "./Extras";
 import { CountUp, Reveal } from "./Motion";
 import FlightTrackScene from "./scenes/FlightTrackScene";
 import MeetGreetScene, { MeetGreetSteps } from "./scenes/MeetGreetScene";
@@ -142,20 +143,28 @@ const reviews = [
   { name: "Example customer", place: "West End → Glasgow Airport", text: "Driver was waiting outside at 4am, helped with our cases and had us at departures in 15 minutes." },
   { name: "Example customer", place: "Edinburgh Airport → Hamilton", text: "Our flight was an hour late and the driver was still there with a name board. Fixed price, no fuss." },
   { name: "Example customer", place: "East Kilbride → Prestwick", text: "Booked the 8-seater for a family holiday. Spotless car, child seats already fitted." },
+  { name: "Example customer", place: "Paisley → Glasgow Airport", text: "Price was exactly what the website said. Booked in a minute on my phone." },
+  { name: "Example customer", place: "Cumbernauld → Edinburgh Airport", text: "Text with the driver's details the night before. Friendly, on time, great chat." },
+  { name: "Example customer", place: "Glasgow Airport → Southside", text: "Landed at midnight with two kids. Driver was waiting with our name. Couldn't ask for more." },
 ];
 
 export function Reviews() {
+  // Duplicated once so the strip can scroll forever without a gap.
   return (
-    <div className="reviews">
-      {reviews.map((r, i) => (
-        <Reveal key={i} className="review" delay={i * 0.1}>
-          <span className="stars" aria-label="5 out of 5">★★★★★</span>
-          <p>“{r.text}”</p>
-          <p className="muted">
-            <b>{r.name}</b> · {r.place} <span className="tag">Example — replace with real review</span>
-          </p>
-        </Reveal>
-      ))}
+    <div className="reviews-marquee">
+      <div className="reviews-track">
+        {[...reviews, ...reviews].map((r, i) => (
+          <figure key={i} className="review" aria-hidden={i >= reviews.length}>
+            <span className="stars" aria-label="5 out of 5">
+              ★★★★★
+            </span>
+            <blockquote>“{r.text}”</blockquote>
+            <figcaption className="muted">
+              <b>{r.name}</b> · {r.place} <span className="tag">Example: replace with a real review</span>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
     </div>
   );
 }
@@ -224,6 +233,7 @@ export function AirportCards() {
         const from = Math.min(...areas.map((ar) => ar.fares[a.code]));
         return (
           <Reveal key={a.code} delay={i * 0.1}>
+            <Tilt className="h100">
             <Link href={`/airports/${a.slug}`} className="airport-card">
               <span className="airport-code">{a.code}</span>
               <span className="airport-plane" aria-hidden>
@@ -235,6 +245,7 @@ export function AirportCards() {
                 From <b>{gbp(from)}</b> →
               </span>
             </Link>
+            </Tilt>
           </Reveal>
         );
       })}
@@ -247,12 +258,14 @@ export function ServiceCards() {
     <div className="service-cards">
       {services.map((s, i) => (
         <Reveal key={s.slug} delay={i * 0.07}>
+          <Tilt className="h100">
           <Link href={`/services/${s.slug}`} className="service-card">
             <span className="service-icon">{s.icon}</span>
             <h3>{s.name}</h3>
             <p>{s.short}</p>
             <span className="more">Learn more →</span>
           </Link>
+          </Tilt>
         </Reveal>
       ))}
     </div>
